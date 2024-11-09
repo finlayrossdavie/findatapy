@@ -1,21 +1,7 @@
-__author__ = "saeedamen"  # Saeed Amen
+__author__ = "finlayrossdavie"  # Finlay Ross-Davie
 
 
 
-#
-# Copyright 2016 Cuemacro
-#
-# Licensed under the Apache License, Version 2.0 (the "License"); you may not
-# use this file except in compliance with the License. You may obtain a copy of
-# the License at http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on a "AS IS" BASIS, WITHOUT
-# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
 
 
 if __name__ == '__main__':
@@ -24,7 +10,7 @@ if __name__ == '__main__':
     from findatapy.util import SwimPool;
     from findatapy.util.dataconstants import DataConstants
     
-    DataConstants.reset_api_key("FRED", "a303dbf7fced37d692d001bebdd47d3f")
+    DataConstants.reset_api_key("BOE", "b6bf6ca2ee9a4747a964336acb85a769")
 
     SwimPool()
 
@@ -36,7 +22,7 @@ if __name__ == '__main__':
     md_request = MarketDataRequest(
         start_date="01 Jun 2000",
         # start date (download data over past decade)
-        data_source='alfred',  # use ALFRED/FRED as data source
+        data_source='twelve',  # use Twelve Data as source 
         tickers=['US GDP'],  # ticker
         fields=['actual-release', 'release-date-time-full'],
         # which fields to download
@@ -52,7 +38,7 @@ if __name__ == '__main__':
     md_request = MarketDataRequest(
         start_date="01 Jun 2000",
         # start date (download data over past decade)
-        data_source='alfred',  # use ALFRED/FRED as data source
+        data_source='twelve',  # use ALFRED/FRED as data source
         tickers=['US GDP'],  # ticker
         fields=['actual-release', 'close'],  # which fields to download
         vendor_tickers=['GDP'],  # ticker (FRED)
@@ -71,7 +57,7 @@ if __name__ == '__main__':
     md_request = MarketDataRequest(
         start_date="01 Jun 2000",
         # start date (download data over past decade)
-        data_source='alfred',  # use ALFRED/FRED as data source
+        data_source='twelve',  
         tickers=['US NFP'],  # ticker
         fields=['actual-release', 'first-revision', 'release-date-time-full'],
         # which fields to download
@@ -102,7 +88,7 @@ if __name__ == '__main__':
     md_request = MarketDataRequest(
         start_date="01 Aug 2013",
         finish_date="30 Nov 2019",
-        data_source='alfred',
+        data_source='twelve',
         tickers=['US NFP'],
         fields=['release-date-time-full'],
         vendor_tickers=['PAYEMS'],

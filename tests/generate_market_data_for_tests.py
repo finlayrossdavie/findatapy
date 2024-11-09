@@ -26,7 +26,8 @@ def generate_market_data_for_tests():
                                    tickers=["S&P500"],
                                    vendor_tickers=["YAHOO/INDEX_GSPC"],
                                    fields=["close"],
-                                   data_source="quandl")
+                                   data_source="twelve")
+                                   #data_source="quandl")
 
     market = Market(market_data_generator=MarketDataGenerator())
 

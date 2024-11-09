@@ -124,6 +124,10 @@ class MarketDataGenerator(object):
                 from findatapy.market.datavendorweb import DataVendorALFRED
                 data_vendor = DataVendorALFRED()
 
+            elif data_source == "twelve":
+                from findatapy.market.datavendorweb import DataVendorTwelveData
+                data_vendor = DataVendorTwelveData()
+
             elif data_source == "yahoo":
                 from findatapy.market.datavendorweb import DataVendorYahoo
                 data_vendor = DataVendorYahoo()

@@ -258,6 +258,9 @@ class DataConstants(object):
     ####### FRED (Federal Reserve of St Louis data) settings
     fred_api_key = key_store("FRED")
 
+    ####### TWELVE DATA settings
+    twelve_api_key = key_store("TWELVE")
+
     ####### FX vol fields
     # Default download for FX vol surfaces etc.
     # types of quotation on vol surface

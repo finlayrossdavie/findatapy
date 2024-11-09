@@ -113,6 +113,7 @@ class MarketDataRequest:
                  fred_api_key: str = None,
                  alpha_vantage_api_key: str = None,
                  eikon_api_key: str = None,
+                 twelve_api_key: str = None,
                  pretransformation: str = None,
                  vintage_as_index: bool = None,
                  push_to_cache: bool = True,
@@ -147,6 +148,8 @@ class MarketDataRequest:
             alpha_vantage_api_key = data_constants.alpha_vantage_api_key
         if eikon_api_key is None:
             eikon_api_key = data_constants.eikon_api_key
+        if twelve_api_key is None:
+            twelve_api_key = data_constants.twelve_api_key
         if data_vendor_custom is None:
             data_vendor_custom = data_constants.data_vendor_custom
         if arcticdb_dict is None:
@@ -208,6 +211,8 @@ class MarketDataRequest:
                 self.alpha_vantage_api_key = \
                     copy.deepcopy(md_request.alpha_vantage_api_key)
                 self.eikon_api_key = copy.deepcopy(md_request.eikon_api_key)
+
+                self.twelve_api_key = copy.deepcopy(md_request,twelve_api_key)
                 
                 self.pretransformation = copy.deepcopy(md_request.pretransformation)
                 self.vintage_as_index = copy.deepcopy(md_request.vintage_as_index)
@@ -263,6 +268,8 @@ class MarketDataRequest:
             self.fred_api_key = fred_api_key
             self.alpha_vantage_api_key = alpha_vantage_api_key
             self.eikon_api_key = eikon_api_key
+            self.twelve_api_key = twelve_api_key # Added     
+    
             
             self.pretransformation = pretransformation
             self.vintage_as_index = vintage_as_index
@@ -781,6 +788,14 @@ class MarketDataRequest:
     @fred_api_key.setter
     def fred_api_key(self, fred_api_key):
         self.__fred_api_key = fred_api_key
+    
+    @property
+    def twelve_api_key(self):
+        return self.__twelve_api_key
+
+    @twelve_api_key.setter
+    def twelve_api_key(self, twelve_api_key):
+        self.__twelve_api_key = twelve_api_key    
         
     @property
     def alpha_vantage_api_key(self):
