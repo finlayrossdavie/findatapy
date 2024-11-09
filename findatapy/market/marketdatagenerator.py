@@ -341,7 +341,8 @@ class MarketDataGenerator(object):
 
         df_agg = None
         calcuations = Calculations()
-
+        
+        
         ticker_cycle = 0
 
         df_group = []

@@ -32,7 +32,7 @@ def generate_market_data_for_tests():
                                    tickers=["BLK"],
                                    vendor_tickers=["BLK"],
                                    fields=["close"],
-                                   data_source="twelve")
+                                   data_source="boe")
 
     market = Market(market_data_generator=MarketDataGenerator())
 

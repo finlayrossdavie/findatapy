@@ -610,7 +610,7 @@ class DataVendorONS(DataVendor):
 
         while (trials < 5):
             try:
-                # TODO
+                
 
                 break
             except:
@@ -744,6 +744,9 @@ class DataVendorBOE(DataVendor):
             "&CSVF=TN&UsingCodes=Y&VPD=Y&VFD=N")
         start_time = md_request.start_date.strftime("%d/%b/%Y")
         end_time = md_request.finish_date.strftime("%d/%b/%Y")
+        print(end_time)
+        print(start_time)
+        
 
         while (trials < 5):
             try:
