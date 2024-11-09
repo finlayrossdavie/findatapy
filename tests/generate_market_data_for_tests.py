@@ -37,7 +37,8 @@ def generate_market_data_for_tests():
     market = Market(market_data_generator=MarketDataGenerator())
 
     df = market.fetch_market(md_request)
-    df.to_csv("S&P500.csv")
+    df.to_csv("BLK.csv")
+    print(df)
 
     # generate tick data from DukasCopy for EURUSD
     md_request = MarketDataRequest(start_date="14 Jun 2016",
