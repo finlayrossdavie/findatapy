@@ -692,6 +692,8 @@ class DataVendorBOE(DataVendor):
         return data_frame
 
 ##############################################################################
+
+'''
 class DataVendorTwelveData(DataVendor):
 
     def __init__(self):
@@ -756,12 +758,143 @@ class DataVendorTwelveData(DataVendor):
                 trials+=1
                 logger.info("Attempting... " + str(
                     trials) + " request to download from Twelve Data")
+        
 
         if trials == 5:
             logger.error("Couldn't download from Twelve Data after several attempts!")
 
         return data_frame
+'''
+'''
+class DataVendorTwelveData(DataVendor):
 
+    def __init__(self):
+        super(DataVendorTwelveData, self).__init__()
+
+    def load_ticker(self, md_request):
+        logger = LoggerManager().getLogger(__name__)
+        md_request_vendor = self.construct_vendor_md_request(md_request)
+
+        logger.info("Requesting TwelveData data")
+
+        data_frame = self.download_daily(md_request_vendor)
+
+        if data_frame is None or data_frame.empty:
+            return None
+
+        if data_frame is not None:
+            if len(md_request.fields) == 1:
+                data_frame.columns = data_frame.columns.str.cat(
+                    md_request.fields * len(data_frame.columns),
+                    sep='.')
+            else:
+                logger.warning("Inconsistent number of fields and tickers.")
+                data_frame.columns = data_frame.columns.str.cat(
+                    md_request.fields, sep='.')
+            data_frame.index.name = 'Date'
+
+        logger.info("Completed request from Twelve Data")
+
+        return data_frame
+
+    def download_daily(self, md_request):
+        logger = LoggerManager().getLogger(__name__)
+        trials = 0
+        data_frame = None
+
+        twelve_url = (
+            "http://api.twelvedata.com/time_series"
+            "?symbol={tickers}&interval=1day&format=CSV"
+            "&start_date={start_date}&end_date={end_date}"
+            "&apikey={api_key}")
+        
+        start_time = md_request.start_date.strftime("%Y-%m-%d")
+        end_time = md_request.finish_date.strftime("%Y-%m-%d")
+        api_key = md_request.twelve_api_key
+
+        tickers = md_request.tickers if isinstance(md_request.tickers, (list, tuple)) else [md_request.tickers]
+
+        while trials < 5:
+            try:
+                data_frame = pd.read_csv(
+                    twelve_url.format(
+                        start_date=start_time, 
+                        end_date=end_time,
+                        tickers=','.join(tickers), 
+                        api_key=api_key),
+                    index_col='DATE')
+                if not data_frame.empty:
+                    break
+            except Exception as e:
+                trials += 1
+                logger.info(f"Attempting... {trials} request to download from Twelve Data")
+                logger.error(f"Error during download attempt {trials}: {e}")
+        
+        if trials == 5:
+            logger.error("Couldn't download from Twelve Data after several attempts!")
+
+        return data_frame
+
+'''
+
+class DataVendorTwelveData(DataVendor):
+
+    def __init__(self):
+        super(DataVendorTwelveData, self).__init__()
+
+    # implement method in abstract superclass
+    def load_ticker(self, md_request):
+        logger = LoggerManager().getLogger(__name__)
+        md_request_vendor = self.construct_vendor_md_request(
+            md_request)
+
+        logger.info("Request TwelveData data")
+
+        data_frame = self.download_daily(md_request_vendor)
+
+        if data_frame is None or data_frame.index is []:
+            return None
+
+        # convert from vendor to findatapy tickers/fields
+        if data_frame is not None:
+            if len(md_request.fields) == 1:
+                data_frame.columns = data_frame.columns.str.cat(
+                    md_request.fields * len(data_frame.columns),
+                    sep='.')
+            else:
+                logger.warning("Inconsistent number of fields and tickers.")
+                data_frame.columns = data_frame.columns.str.cat(
+                    md_request.fields, sep='.')
+            data_frame.index.name = 'Date'
+
+        logger.info("Completed request from Twelve Data")
+
+        return data_frame
+
+    def download_daily(self, md_request):
+        logger = LoggerManager().getLogger(__name__)
+        trials = 0
+
+        data_frame = None
+
+        start_time = md_request.start_date.strftime("%d/%b/%Y")
+        end_time = md_request.finish_date.strftime("%d/%b/%Y")
+        api_key = md_request.twelve_api_key
+
+        tickers = md_request.tickers
+
+        td = TDClient(apikey=api_key)
+
+        ts = td.time_series(
+            symbol=tickers,
+            interval="1day",
+            start_date=start_time,
+            end_date = end_time
+            )
+        
+        data_frame = ts.as_pandas
+        print(data_frame)
+        return data_frame()
 
 ###############################################################################
 

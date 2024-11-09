@@ -10,7 +10,7 @@ if __name__ == '__main__':
     from findatapy.util import SwimPool;
     from findatapy.util.dataconstants import DataConstants
     
-    DataConstants.reset_api_key("BOE", "b6bf6ca2ee9a4747a964336acb85a769")
+    DataConstants.reset_api_key("TWELVE", "b6bf6ca2ee9a4747a964336acb85a769")
 
     SwimPool()
 
@@ -23,14 +23,14 @@ if __name__ == '__main__':
         start_date="01 Jun 2000",
         # start date (download data over past decade)
         data_source='twelve',  # use Twelve Data as source 
-        tickers=['US GDP'],  # ticker
+        tickers=['BLK'],  # ticker
         fields=['actual-release', 'release-date-time-full'],
         # which fields to download
-        vendor_tickers=['GDP'],  # ticker (FRED)
+        vendor_tickers=['BLK'],  # ticker (FRED)
         vendor_fields=['actual-release',
                        'release-date-time-full'])  # which FRED fields to download
-
     df = market.fetch_market(md_request)
+
 
     print(df)
 
